@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title> ReactJS </title>
+    <script src="https://fb.me/react-0.14.7.js"> </script>
+    <script src="https://fb.me/react-dom-0.14.7.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.2/browser.min.js"> </script>
+    
+    <style>
+			body {
+			  padding: 80px;
+			  font-family: sans-serif;
+			  background-color: #000;
+			}
+
+			.container {
+			  width: 600px;
+			  margin: auto;
+			  color: black;
+			  padding: 20px;
+			  text-align: center;
+			}
+
+			.btn {
+			  border: 0;
+			  padding: 15px;
+			  margin: 20px;
+			  width: 20%;
+			  font-size: 15px;
+			  outline: none;
+			  border-radius: 3px;
+			  color: #FFF;
+			  font-weight: bold;
+			}
+
+			.btn.royblue-btn {
+			  background-color: #4169E1;
+			  box-shadow: 0px 5px 0px 0px #fff;
+			  margin: 0 auto;
+			}
+
+			.btn.royblue-btn:hover {
+			   background-color: #4169E1;
+			}
+
+			.btn.royblue-btn {
+			  background-color: #4169E1;
+			  box-shadow: 0px 5px 0px 0px #fff;
+			}
+
+			.btn.royblue-btn:hover {
+			   background-color: #4169E1;
+			}
+
+			.btn.green-btn {
+			  background-color: #2ecc71;
+			  box-shadow: 0px 5px 0px 0px #15B358;
+			}
+
+			.btn.green-btn:hover {
+			  background-color: #48E68B;
+			}
+
+			.btn.red-btn {
+			  background-color: #e74c3c;
+			  box-shadow: 0px 5px 0px 0px #c0392b;
+			}
+
+			.btn.red-btn:hover {
+			  background-color: #F75E53;
+			}
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="text/babel">
+    var LifecycleComponent = React.createClass({
+      increment: function() {
+        this.setState({
+          count: this.state.count + 1
+        })
+      },
+      
+      getDefaultProps: function() {
+        console.log("Getting our default properties");
+      },
+      
+      getInitialState: function() {
+        console.log("Getting our initial state");
+        return({
+          count: 0
+        })
+      },
+    
+      componentWillMount: function() {
+        console.log("Component is mounting");
+      },
+      
+      render: function() {
+        console.log("Component is rendered");
+        return (
+          <button className="btn royblue-btn" onClick={this.increment}>{this.state.count}</button>
+        )
+      },
+      
+      componentDidMount: function() {
+        console.log("Component has rendered");
+        this.interval = setInterval(this.increment, 1000);
+      },
+     
+      componentWillUnmount: function() {
+        clearInterval(this.interval);
+        console.log('Component Unmounted!');
+      }
+    });
+
+    var LifecycleContainer = React.createClass({
+        mount: function() {
+          ReactDOM.render(
+            <LifecycleComponent />,
+            document.getElementById('renderHere')
+          );
+        },
+        unmount: function() {
+          ReactDOM.unmountComponentAtNode(document.getElementById('renderHere'));
+        },
+        render: function() {
+          console.log("LifecycleContainer Rendered");
+          return(
+            <div className="container">
+              <button className="btn green-btn" onClick={this.mount}>Mount</button>
+              <button className="btn red-btn" onClick={this.unmount}>Unmount</button>
+              <div id="renderHere"></div>
+            </div>
+          )
+        }
+    });
+
+    ReactDOM.render(
+      <LifecycleContainer />,
+      document.getElementById('app')
+    );
+    </script>
+  </body>
+</html>
